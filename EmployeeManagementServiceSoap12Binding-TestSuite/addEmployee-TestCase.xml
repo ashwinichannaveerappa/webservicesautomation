@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="ab720fec-f9d2-4827-8062-51c5c4b23a6f" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="addEmployee TestCase" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="ab720fec-f9d2-4827-8062-51c5c4b23a6ffileName">addEmployee-TestCase</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="groovy" name="propertySetters" id="ec6c088a-9a57-41e9-abab-d99723564d8e"><con:settings/><con:config><script>String aToZ="Abcdef"; // 36 letter.
+ String rdepartment="departmentxy"
+
+ 
+//method to generate randome mane
+private static String generateRandom(String aToZ) {
+    Random rand=new Random();
+    StringBuilder res=new StringBuilder();
+    for (int i = 0; i &lt; 10; i++) {
+       int randIndex=rand.nextInt(aToZ.length()); 
+       res.append(aToZ.charAt(randIndex));            
+    }
+    return res.toString();
+}
+
+
+
+String name  = generateRandom(aToZ);
+String department = generateRandom(rdepartment);
+
+testRunner.testCase.testSuite.project.setPropertyValue("name",name);
+
+testRunner.testCase.testSuite.project.setPropertyValue("department",department );
+
+
+//method to genrate random age and id
+
+public static int generateRandomIntIntRange(int min, int max) {
+    Random r = new Random();
+    return r.nextInt((max - min) + 1) + min;
+}
+int age =generateRandomIntIntRange(20,99)
+int id =generateRandomIntIntRange(2322,9999)
+
+
+testRunner.testCase.testSuite.project.setPropertyValue("age",age.toString());
+testRunner.testCase.testSuite.project.setPropertyValue("id",id.toString());
+
+
+
+</script></con:config></con:testStep><con:testStep type="request" id="437639a4-1d2f-4de0-9ed0-dd70139f7bee" name="addEmployee"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>EmployeeManagementServiceSoap12Binding</con:interface><con:operation>addEmployee</con:operation><con:request name="addEmployee" id="0f030bc3-3201-4b7b-95d9-c6a45f8fb26c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${#Project#Endpoint}</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:typ="http://sample.com/reservation/guest/types">
+   <soap:Header/>
+   <soap:Body>
+      <typ:addEmployee>
+         <!--Optional:-->
+         <typ:name>${#Project#name}</typ:name>
+         <!--Optional:-->
+         <typ:id>${#Project#id}</typ:id>
+         <!--Optional:-->
+         <typ:Department>${#Project#department}</typ:Department>
+         <!--Optional:-->
+         <typ:age>${#Project#age}</typ:age>
+      </typ:addEmployee>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:assertion type="Valid HTTP Status Codes" id="5f193648-bd23-4a1b-85e0-ae43f1d05685" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200
+</codes></con:configuration></con:assertion><con:assertion type="XPath Match" id="8205978c-0b52-4d7c-82d8-feedaee5df6e" name="XPath Match"><con:configuration><path>declare namespace ns='http://sample.com/reservation/guest/types';
+//ns:addEmployeeResponse[1]/ns:return[1]</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig action="urn:addEmployee" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/><con:environmentSpec><con:entry environmentId="b8b0cef9-71b9-47cb-be7e-c02f850f8c57"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>ec6c088a-9a57-41e9-abab-d99723564d8e</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>437639a4-1d2f-4de0-9ed0-dd70139f7bee</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:environmentSpec><con:entry environmentId="b8b0cef9-71b9-47cb-be7e-c02f850f8c57"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testCase>
